@@ -21,13 +21,75 @@ router.post('/', (req, res) => {
     const hash = bcrypt.hashSync(password, 8);
     user.password = hash;
 
-    Users.add(user)
-    .then(users => {
-        res.status(200).json(users)
+
+    Users.findBy({email})
+    .first()
+    .then(userEmail => {
+        Users.findBy({username})
+        .first()
+        .then(userUsername => {
+            if(userEmail) {
+                res.status(200).json({ Message: "Email already taken."})
+            } else if(userUsername) {
+                res.status(200).json({ Message: "Username already taken."})
+            } else {
+                Users.add(user)
+                .then(users => {
+                    Users.findBy({email})
+                    .first()
+                    .then(user => {
+                        console.log(user)
+                        if( user && bcrypt.compareSync(password, user.password)) {
+                            res.status(200).json({
+                                id: user.id,
+                                message: `Welcome ${user.username}`,
+                                token: generateToken(user)
+                            })
+                        } else {
+                            res.status(400).json({ message: "Invalid Credentials"})
+                        }
+                    })
+                    .catch(err => {
+                        res.status(500).json({ error: "Could not login", err})
+                    })
+                })
+                .catch(err => {
+                    res.status(500).json({ error: "Could not Register User"})
+                })
+    
+            }
+
+        })
+        .catch(err => {
+            res.status(500).json({ error: "Could not search through usernames", err})
+        })
     })
     .catch(err => {
-        res.status(500).json({ error: "Could not get users"})
+        res.status(500).json({ error: "Could not search through emails", err})
     })
+
+})
+
+router.post('/login', (req, res) => {
+    let { email, password } = req.body;
+
+    Users.findBy({email})
+        .first()
+        .then(user => {
+            console.log(user)
+            if( user && bcrypt.compareSync(password, user.password)) {
+                res.status(200).json({
+                    id: user.id,
+                    message: `Welcome ${user.username}`,
+                    token: generateToken(user)
+                })
+            } else {
+                res.status(400).json({ message: "Invalid Credentials"})
+            }
+        })
+        .catch(err => {
+            res.status(500).json({ error: "Could not login", err})
+        })
 })
 
 
