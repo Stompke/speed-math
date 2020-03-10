@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import {NavLink, Route, Switch} from 'react-router-dom'
+import React from 'react';
+import {NavLink} from 'react-router-dom'
 
 
 //card
@@ -61,19 +61,19 @@ createStyles({
 // );
 
 const SelectGame = () => {
-    const [ games, setGames ] = useState([
+    const games = [
         {sign: '+', subject: 'Addition'},
         {sign: '-', subject: 'Subtraction'},
         {sign: '*', subject: 'Multiplication'},
         {sign: '÷', subject: 'Division'}
-    ]);
+    ];
 
     const classes = useStyles();
 
 
 
-    const card = (subject,sign) => (
-            <Card className={classes.card} variant="outlined">
+    const card = (subject, sign) => (
+            <Card key={subject} className={classes.card} variant="outlined">
             <CardContent>
             <Typography variant="h5" component="h2" >
                 {subject}

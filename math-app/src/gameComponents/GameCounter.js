@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 
-
+const initialTimer = 30;
 const GameCounter = (props) => {
-    const [ seconds, setSeconds ] = useState(20);
+    const [ seconds, setSeconds ] = useState(initialTimer);
     const [ minutes, setMinutes ] = useState(0);
     useEffect(() => {
     const myInterval = setInterval(() => {
@@ -23,17 +23,12 @@ const GameCounter = (props) => {
     return () => {
     clearInterval(myInterval);
     };
-    },[seconds, minutes]);
-
-    
+    },[seconds, minutes, props.score]);
 
     const restartTimer = () => {
-        setSeconds(5);
+        setSeconds(initialTimer);
     }
 
-
-
-    
     return (
         <div>
             {/* <h1>Timer</h1>

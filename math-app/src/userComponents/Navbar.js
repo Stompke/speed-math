@@ -6,7 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 //components
 import MathBoard from '../gameComponents/MathBoard';
 import SelectGame from '../gameComponents/SelectGame';
-import Dashboard from '../userComponents/Dashboard';
+// import Dashboard from '../userComponents/Dashboard';
 import Account from '../userComponents/Account';
 
 
@@ -144,13 +144,13 @@ const useStyles = makeStyles(theme => ({
       <Route path='/select-game/:type/:levelA/:sign/:levelB'>
           <MathBoard />
       </Route>
-      <Route path='/select-game'>
+      <Route path='/'>
           <SelectGame />
       </Route>
 
-      <Route path='/'>
+      {/* <Route path='/'>
         <Dashboard />
-      </Route>
+      </Route> */}
     </Switch>
     </div>
 

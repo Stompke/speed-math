@@ -34,27 +34,25 @@ const Login = () => {
     const history = useHistory();
     const classes = useStyles();
     const [ credentials, setCredentials ] = useState({});
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [ snackbarText, setSnackbarText ] = useState({})
 
-  const handleSnackbar = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpen(false);
-  };
-
+    
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      
+      setOpen(false);
+    };
+    
     const onChangeHandler = e => {
       setCredentials({
         ...credentials,
         [e.target.name]: e.target.value
       })
     }
-
+    
     const loginUser = e => {
       e.preventDefault()
       axiosWithAuth()
@@ -62,14 +60,26 @@ const Login = () => {
       .then(res => {
         console.log(res)
         localStorage.setItem('token', res.data.token)
-        localStorage.setItem('user', res.data.message)
-        history.push('/');
+        history.push('/')
       })
       .catch( err => {
         console.log(err.response.data.message)
-        handleSnackbar(err.response.data.message)
+        setSnackbarText(err.response.data.message)
+        handleSnackbar()
         
       })
+    }
+
+    const handleSnackbar = () => {
+      setOpen(true);
+    };
+
+    const snackbarWithText = (text) => {
+      return (
+        <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
+          <Alert severity="error">{text}</Alert>
+        </Snackbar>
+      )
     }
 
     return (
@@ -87,17 +97,13 @@ const Login = () => {
             </h6>
           </Paper>
           <div className={classes.root}>
-            <Button variant="outlined" onClick={handleSnackbar}>
-              Open success snackbar
-            </Button>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-
-            <Alert severity="error">This is an error message!</Alert>
-            </Snackbar>
-            <Alert severity="warning">This is a warning message!</Alert>
-            <Alert severity="info">This is an information message!</Alert>
-            <Alert severity="success">This is a success message!</Alert>
+            {snackbarWithText(snackbarText)}
           </div>
+          {/* <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              Welcome!
+            </Alert>
+          </Snackbar> */}
         </div>
     )
 }
