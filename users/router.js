@@ -29,9 +29,9 @@ router.post('/', (req, res) => {
         .first()
         .then(userUsername => {
             if(userEmail) {
-                res.status(200).json({ Message: "Email already taken."})
+                res.status(401).json({ Message: "Email already taken."})
             } else if(userUsername) {
-                res.status(200).json({ Message: "Username already taken."})
+                res.status(401).json({ Message: "Username already taken."})
             } else {
                 Users.add(user)
                 .then(users => {

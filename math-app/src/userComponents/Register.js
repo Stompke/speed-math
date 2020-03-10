@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import '../App.css';
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -33,19 +36,20 @@ const Register = () => {
         console.log(res)
       })
       .catch( err => {
-        console.log(err)
+        console.log(err.message)
       })
     }
 
     return (
-        <div>
+        <div className='App-header'>
             <h1>Register</h1>
             <form onSubmit={registerUser} className={classes.root} noValidate autoComplete="off">
                 <TextField onChange={onChangeHandler} name="email" id="email" label="email" variant="outlined" />
                 <TextField onChange={onChangeHandler} name="username" id="username" label="username" variant="outlined" />
                 <TextField onChange={onChangeHandler} name="password" type='password' id="password" label="password" variant="outlined" />
-                  <Button variant="contained" type='submit' color="primary">Primary</Button>
-        </form>
+                <Button variant="contained" type='submit' color="primary">Register</Button>
+            </form>
+            <Link to='/login'>login</Link>
         </div>
     )
 }
