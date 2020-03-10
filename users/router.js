@@ -3,14 +3,17 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config/secrets');
 const Users = require('./model');
+const authenticate = require('../api/authenticate-middleware');
 
-router.get('/', (req, res) => {
-    Users.all()
+router.get('/', authenticate, (req, res) => {
+    let id = req.decodedToken.subject
+    Users.findBy({id})
+    .first()
     .then(users => {
         res.status(200).json(users)
     })
     .catch(err => {
-        res.status(500).json({ error: "Could not get users"})
+        res.status(500).json({ error: "Could not get users", err})
     })
 })
 

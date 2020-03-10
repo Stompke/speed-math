@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../App.css';
+import Paper from '@material-ui/core/Paper';
+
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -14,6 +16,10 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(1),
         width: 200,
       },
+    },
+    paper: {
+      padding: 50,
+      background: '#ffffff90'
     },
   }));
 
@@ -42,6 +48,7 @@ const Register = () => {
 
     return (
         <div className='App-header'>
+          <Paper className={classes.paper} elevation={3}>
             <h1>Register</h1>
             <form onSubmit={registerUser} className={classes.root} noValidate autoComplete="off">
                 <TextField onChange={onChangeHandler} name="email" id="email" label="email" variant="outlined" />
@@ -49,7 +56,10 @@ const Register = () => {
                 <TextField onChange={onChangeHandler} name="password" type='password' id="password" label="password" variant="outlined" />
                 <Button variant="contained" type='submit' color="primary">Register</Button>
             </form>
-            <Link to='/login'>login</Link>
+            <h6>
+              <Link to='/login'>login</Link>
+            </h6>
+          </Paper>
         </div>
     )
 }

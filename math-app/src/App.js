@@ -8,13 +8,12 @@ import { Route, Switch} from 'react-router-dom'
 import Login from './userComponents/Login';
 import Register from './userComponents/Register';
 import Navbar from './userComponents/Navbar';
+import PrivateRoute from './utils/PrivateRoute';
 
 
 function App() {
   return (
     <div className="App">
-
-
         <Switch>
           <Route path="/login">
             <Login />
@@ -22,15 +21,8 @@ function App() {
           <Route path="/register">
             <Register />
           </Route>
-          <Route path="/">
-            <Navbar />
-            
-          </Route>
-
+          <PrivateRoute component={Navbar} path="/" />
         </Switch>
-
-
-
     </div>
   );
 }
