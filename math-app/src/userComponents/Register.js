@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import '../App.css';
+
 import Paper from '@material-ui/core/Paper';
 
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+function Alert(props: AlertProps) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -26,6 +32,9 @@ const useStyles = makeStyles(theme => ({
 const Register = () => {
     const classes = useStyles();
     const [ credentials, setCredentials ] = useState({});
+    const [open, setOpen] = useState(false);
+    const [ snackbarText, setSnackbarText ] = useState({})
+    const history = useHistory();
 
     const onChangeHandler = e => {
       setCredentials({
@@ -40,10 +49,34 @@ const Register = () => {
       .post('http://localhost:5000/api/users/', credentials)
       .then(res => {
         console.log(res)
+        localStorage.setItem('token', res.data.token)
+        history.push('/')
       })
       .catch( err => {
-        console.log(err.message)
+        // console.log(err.message)
+        // console.log(err.response.data.message)
+        setSnackbarText(err.response.data.message)
+        handleSnackbar()
       })
+    }
+
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpen(false);
+    };
+
+    const handleSnackbar = () => {
+      setOpen(true);
+    };
+
+    const snackbarWithText = (text) => {
+      return (
+        <Snackbar open={open} autoHideDuration={1500} onClose={handleClose}>
+          <Alert severity="error">{text}</Alert>
+        </Snackbar>
+      )
     }
 
     return (
@@ -60,6 +93,9 @@ const Register = () => {
               <Link to='/login'>login</Link>
             </h6>
           </Paper>
+          <div className={classes.root}>
+            {snackbarWithText(snackbarText)}
+          </div>
         </div>
     )
 }
