@@ -34,7 +34,7 @@ const GameCounter = (props) => {
             {/* <h1>Timer</h1>
             <h3>{timer.seconds}</h3> */}
             {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-            <Button variant='contained' color='primary'  onClick={restartTimer}>Restart</Button>
+            {/* <Button variant='contained' color='primary'  onClick={restartTimer}>Restart</Button> */}
         </div>
 
     )

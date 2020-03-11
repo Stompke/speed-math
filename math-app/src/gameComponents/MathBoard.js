@@ -3,10 +3,14 @@ import '../App.css';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 
+//components
+import PostGame from './PostGame';
+
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Fab from '@material-ui/core/Fab';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
+import Paper from '@material-ui/core/Paper';
 
 import TextField from '@material-ui/core/TextField';
 
@@ -28,6 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'absolute',
       top: 100,
       left: 20,
+    },
+    paper: {
+      padding: 50,
+      background: '#ffffff90'
     }
   }),
 );
@@ -132,20 +140,22 @@ const Mathboard = () => {
     return (
 
       <>
-            <h2>{type}</h2>
-            <h3>Level: {levelA} by {levelB}</h3>
-            
-            <GameCounter score={score}/>
-            <h4>score: {score}</h4>
+        <Paper className={classes.paper} elevation={3}>
+          <h2>{type}</h2>
+          <h3>Level: {levelA} by {levelB}</h3>
+          
+          <GameCounter score={score}/>
+          <h4>score: {score}</h4>
 
-            <h4>{num.one} {sign} {num.two}</h4>
+          <h4>{num.one} {sign} {num.two}</h4>
 
-            {/* <form className={classes.root} noValidate autoComplete="off"> */}
-                <TextField onChange={handleAnswerChange} type='number' value={answer} name='answer' id="standard-basic" label="Answer" />
-            {/* </form> */}
+          {/* <form className={classes.root} noValidate autoComplete="off"> */}
+              <TextField onChange={handleAnswerChange} type='number' value={answer} name='answer' id="standard-basic" label="Answer" />
+          {/* </form> */}
 
-            <Fab onClick={() => history.goBack()} className={classes.backButton} color="primary" aria-label="add"><ArrowBackIosIcon /></Fab>
-
+          <Fab onClick={() => history.goBack()} className={classes.backButton} color="primary" aria-label="add"><ArrowBackIosIcon /></Fab>
+          <PostGame />
+        </Paper>
       </>
     )
 }
