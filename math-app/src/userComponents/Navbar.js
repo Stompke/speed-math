@@ -8,6 +8,7 @@ import MathBoard from '../gameComponents/MathBoard';
 import SelectGame from '../gameComponents/SelectGame';
 // import Dashboard from '../userComponents/Dashboard';
 import Account from '../userComponents/Account';
+import NewSelectGame from '../gameComponents/NewSelectGame';
 
 
 //app bar
@@ -86,10 +87,10 @@ const useStyles = makeStyles(theme => ({
                 <ListItemText>Home</ListItemText>
                 </ListItem>
             </NavLink>
-            <Link to='/select-game'>
+            <Link to='/new-select-game'>
                 <ListItem button>
                 <ListItemIcon><InboxIcon /></ListItemIcon>
-                <ListItemText>Select Game</ListItemText>
+                <ListItemText>new-select-game</ListItemText>
                 </ListItem>
             </Link>
             {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -144,9 +145,13 @@ const useStyles = makeStyles(theme => ({
       <Route path='/select-game/:type/:levelA/:sign/:levelB'>
           <MathBoard />
       </Route>
+      <Route path='/new-select-game'>
+          <NewSelectGame />
+      </Route>
       <Route path='/'>
           <SelectGame />
       </Route>
+
 
       {/* <Route path='/'>
         <Dashboard />

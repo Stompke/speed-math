@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../App.css';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 //components
 import PostGame from './PostGame';
@@ -47,6 +48,7 @@ const Mathboard = () => {
     const history = useHistory();
     const classes = useStyles();
     const { type, levelA, sign, levelB } = useParams();
+    const [gameId, setGameId] = useState({});
     const [ answer, setAnswer ] = useState({})
     const [ num, setNum ] = useState({
       one: Math.floor(Math.random()*newLevelA),
@@ -54,7 +56,19 @@ const Mathboard = () => {
     });
     const [score, setScore] = useState(0)
 
+    useEffect(() => {
+      axiosWithAuth()
+      .post('/api/games', {name: `${type} ${levelA}x${levelB}`})
+      .then(res => {
+          setGameId(res.data.id)
+          console.log(res)
+      })
+      .catch(err => {
+          console.log(err)
+      })
+  },[])
 
+      // matches the number of digits for the problem
       while (newLevelA.length-1 < levelA) {
         newLevelA = newLevelA + '0';
       }
@@ -62,8 +76,16 @@ const Mathboard = () => {
         newLevelB = newLevelB + '0'
       }
 
+      // starts the game with 2 random numbers
+      useState(() => {
+        setNum({
+          one: Math.floor(Math.random()*newLevelA),
+          two: Math.floor(Math.random()*newLevelB),
+        })
+      },[])
 
 
+    // sets spacebar to reset text input field
     useEffect(() => {
         const handleEsc = (event) => {
            if (event.keyCode === 32) {
@@ -77,19 +99,13 @@ const Mathboard = () => {
         };
       }, []);
 
+    // sets state for current answer in text field
     const handleAnswerChange = e => {
         e.preventDefault();
         setAnswer(
             Number(e.target.value)
         )
     }
-
-    // useEffect(() => {
-    //     setNum({
-    //         one: Math.floor(Math.random()*newLevelA),
-    //         two: Math.floor(Math.random()*newLevelB),
-    //     })
-    // },[])
 
     if(type === 'Addition') {
       if(num.one + num.two === answer) {

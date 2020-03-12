@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {NavLink} from 'react-router-dom'
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 
 //card
@@ -47,20 +48,7 @@ createStyles({
 );
 
 
-//   const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     button: {
-//       display: 'block',
-//       marginTop: theme.spacing(2),
-//     },
-//     formControl: {
-//       margin: theme.spacing(1),
-//       minWidth: 120,
-//     },
-//   }),
-// );
-
-const SelectGame = () => {
+const NewSelectGame = () => {
     const games = [
         {sign: '+', subject: 'Addition'},
         {sign: '-', subject: 'Subtraction'},
@@ -69,6 +57,17 @@ const SelectGame = () => {
     ];
 
     const classes = useStyles();
+
+    useEffect(() => {
+        axiosWithAuth()
+        .get('/api/games')
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    },[])
 
 
 
@@ -108,4 +107,4 @@ const SelectGame = () => {
     );
 }
 
-export default SelectGame;
+export default NewSelectGame;

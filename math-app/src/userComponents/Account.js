@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { connect } from 'react-redux';
 
 
-const Account = () => {
+const Account = props => {
     const [ userInfo, setUserInfo ] = useState({});
 
     useEffect(() => {
@@ -19,6 +20,7 @@ const Account = () => {
 
     return (
         <>
+            <h1>{props.title}</h1>
             <h1>Welcome {userInfo.username}</h1>
             <h2>User Id: {userInfo.id}</h2>
             <h2>Username: {userInfo.username}</h2>
@@ -27,4 +29,12 @@ const Account = () => {
     )
 }
 
-export default Account;
+const mapStateToProps = state => {
+    return {
+        title: state.title
+    }
+}
+
+export default connect(
+    mapStateToProps
+)(Account);

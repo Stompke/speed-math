@@ -2,6 +2,7 @@ const db = require('../database/db-config');
 
 module.exports = {
     games,
+    filterGames,
     leaderboard,
     postLeaderboard,
     filterLeaderboard
@@ -9,6 +10,12 @@ module.exports = {
 
 function games() {
     return db('game_types');
+}
+
+function filterGames(filter) {
+    return db('game_types')
+    .where(filter)
+    .first()
 }
 
 function leaderboard() { 

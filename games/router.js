@@ -16,6 +16,18 @@ router.get('/', (req, res) => {
         })
 })
 
+router.post('/', (req, res) => {
+    // let id = req.decodedToken.subject
+    const { name } = req.body
+    Games.filterGames({name})
+        .then(filteredGames => {
+            res.status(200).json(filteredGames)
+        })
+        .catch(err => {
+            res.status(500).json({ error: "Could not filter games", err})
+        })
+})
+
 router.get('/leaderboard', (req, res) => {
     Games.leaderboard()
         .then(leaderboard => {

@@ -1,4 +1,8 @@
 import React from 'react'
+import { connect } from "react-redux"; //HOC
+import { useHistory, useLocation } from 'react-router-dom';
+import { closePostGame } from '../actions';
+
 
 // modal
 import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
@@ -48,7 +52,9 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 const DialogContent = withStyles((theme: Theme) => ({
   root: {
     padding: theme.spacing(2),
+    minWidth: 300
   },
+
 }))(MuiDialogContent);
 
 const DialogActions = withStyles((theme: Theme) => ({
@@ -58,8 +64,10 @@ const DialogActions = withStyles((theme: Theme) => ({
   },
 }))(MuiDialogActions);
 
-const PostGame = () => {
+const PostGame = props => {
     const [open, setOpen] = React.useState(false);
+    const history = useHistory();
+    const location = useLocation().pathname;
 
     const handleClickOpen = () => {
     setOpen(true);
@@ -70,36 +78,38 @@ const PostGame = () => {
 
     return (
         <>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-                Open dialog
-            </Button>
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open}>
+            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={props.postGameModal}>
             <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                Modal title
+                Nice Job!
             </DialogTitle>
             <DialogContent dividers>
                 <Typography gutterBottom>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-                in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+                <DialogTitle>Score: {props.postGameStats}</DialogTitle>
                 </Typography>
-                <Typography gutterBottom>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis
-                lacus vel augue laoreet rutrum faucibus dolor auctor.
-                </Typography>
-                <Typography gutterBottom>
-                Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel
-                scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus
-                auctor fringilla.
-                </Typography>
+
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={handleClose} color="primary">
-                Save changes
+                <Button autoFocus onClick={props.closePostGame} color="primary">
+                SEND
                 </Button>
+                {/* <Button variant='contained' color='primary'  onClick={restartTimer}>Restart</Button> */}
+
+
             </DialogActions>
             </Dialog>
         </>
     )
 }
 
-export default PostGame;
+
+const mapStateToProps = state => {
+  return {
+    postGameModal: state.postGameModal,
+    postGameStats: state.postGameStats
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { closePostGame }
+)(PostGame)
