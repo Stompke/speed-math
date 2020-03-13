@@ -4,10 +4,10 @@ import { connect } from "react-redux"; //HOC
 import { setPostGame } from '../actions';
 
 
-const initialTimer = 10;
+const initialTimer = 1;
 const GameCounter = props => {
-    const [ seconds, setSeconds ] = useState(initialTimer);
-    const [ minutes, setMinutes ] = useState(0);
+    const [ seconds, setSeconds ] = useState(0);
+    const [ minutes, setMinutes ] = useState(initialTimer);
     useEffect(() => {
     const myInterval = setInterval(() => {
     if (seconds > 0) {

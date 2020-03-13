@@ -63,9 +63,9 @@ createStyles({
 const SelectGame = () => {
     const games = [
         {sign: '+', subject: 'Addition'},
-        {sign: '-', subject: 'Subtraction'},
+        // {sign: '-', subject: 'Subtraction'},
         {sign: '*', subject: 'Multiplication'},
-        {sign: '÷', subject: 'Division'}
+        // {sign: '÷', subject: 'Division'}
     ];
 
     const classes = useStyles();

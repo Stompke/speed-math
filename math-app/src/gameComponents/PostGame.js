@@ -89,7 +89,7 @@ const PostGame = props => {
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={props.closePostGame} color="primary">
-                SEND
+                yay!
                 </Button>
                 {/* <Button variant='contained' color='primary'  onClick={restartTimer}>Restart</Button> */}
 

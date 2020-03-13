@@ -70,6 +70,8 @@ const Mathboard = props => {
       .catch(err => {
           console.log(err)
       })
+
+      
   },[])
 
       // matches the number of digits for the problem
@@ -170,7 +172,7 @@ const Mathboard = props => {
           <h4>{num.one} {sign} {num.two}</h4>
 
           {/* <form className={classes.root} noValidate autoComplete="off"> */}
-              <TextField onChange={handleAnswerChange} type='number' value={answer} name='answer' id="standard-basic" label="Answer" />
+              <TextField autoFocus  onChange={handleAnswerChange} type='number' value={answer} name='answer' id="standard-basic" label="Answer" />
           {/* </form> */}
 
           <Fab onClick={() => history.goBack()} className={classes.backButton} color="primary" aria-label="add"><ArrowBackIosIcon /></Fab>
