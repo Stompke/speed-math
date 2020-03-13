@@ -3,10 +3,10 @@
 const initialState = {
     isLoading: false,
     smurfs: [],
-    title: 'THIS IS A TITLE IN REDUX STATE',
     selectedSmurf: null,
     postGameStats: {},
-    postGameModal: false
+    postGameModal: false,
+    gameId: null,
 }
 
 export const reducer = (state = initialState, action) => {
@@ -56,6 +56,13 @@ export const reducer = (state = initialState, action) => {
                 ...state,
                 postGameModal: false
             }
+
+        case 'SET_GAME_ID':
+            return {
+                ...state,
+                gameId: action.payload
+            }
+
         
         default:
             return state;

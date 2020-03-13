@@ -83,16 +83,32 @@ export const deleteSmurf = id => {
     }
 }
 
-export const setPostGame = stats => {
+export const setPostGame = (stats, gameType) => {
     return dispatch => {
         dispatch({type: 'SET_POST_GAME_STATS', payload: stats})
-        // axiosWithAuth()
-        // .post('/api/games', )
+        let addLeaderboard = {};
+        addLeaderboard.score = stats;
+        addLeaderboard.game_type = gameType;
+
+        axiosWithAuth()
+            .post('/api/games/leaderboard', addLeaderboard)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }
 
 export const closePostGame = () => {
     return dispatch => {
         dispatch({type: 'CLOSE_POST_GAME'})
+    }
+}
+
+export const setGameId = gameId => {
+    return dispatch => {
+        dispatch({type: 'SET_GAME_ID', payload: gameId})
     }
 }

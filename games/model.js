@@ -37,5 +37,6 @@ function filterLeaderboard(filter) {
         .select('l.id as id','l.user_id','u.username','g.name','l.posted_on','l.score','l.share')
         .join('game_types as g','g.id','l.game_type')
         .join('users as u', 'u.id','l.user_id')
+        .orderBy('l.posted_on', 'desc')
         
 }

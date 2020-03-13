@@ -4,7 +4,7 @@ import { connect } from "react-redux"; //HOC
 import { setPostGame } from '../actions';
 
 
-const initialTimer = 1;
+const initialTimer = 10;
 const GameCounter = props => {
     const [ seconds, setSeconds ] = useState(initialTimer);
     const [ minutes, setMinutes ] = useState(0);
@@ -16,7 +16,7 @@ const GameCounter = props => {
     if (seconds === 0) {
     if (minutes === 0) {
     clearInterval(myInterval);
-    props.setPostGame(props.score)
+    props.setPostGame(props.score, props.gameId)
     } else {
     setMinutes((minutes) => minutes-1);
     setSeconds(59);
@@ -45,7 +45,7 @@ const GameCounter = props => {
 
 const mapStateToProps = state => {
     return {
-        title: state.title
+        gameId: state.gameId,
     }
 }
 

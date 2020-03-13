@@ -65,21 +65,20 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 
 const PostGame = props => {
-    const [open, setOpen] = React.useState(false);
-    const history = useHistory();
-    const location = useLocation().pathname;
+    // const [open, setOpen] = React.useState(false);
+    // const history = useHistory();
 
-    const handleClickOpen = () => {
-    setOpen(true);
-    };
-    const handleClose = () => {
-    setOpen(false);
-    };
+    // const handleClickOpen = () => {
+    // setOpen(true);
+    // };
+    // const handleClose = () => {
+    // setOpen(false);
+    // };
 
     return (
         <>
-            <Dialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={props.postGameModal}>
-            <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            <Dialog aria-labelledby="customized-dialog-title" open={props.postGameModal}>
+            <DialogTitle id="customized-dialog-title" >
                 Nice Job!
             </DialogTitle>
             <DialogContent dividers>
@@ -105,7 +104,8 @@ const PostGame = props => {
 const mapStateToProps = state => {
   return {
     postGameModal: state.postGameModal,
-    postGameStats: state.postGameStats
+    postGameStats: state.postGameStats,
+    gameId: state.gameId,
   }
 }
 

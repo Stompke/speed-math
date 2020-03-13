@@ -3,6 +3,9 @@ import '../App.css';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { connect } from "react-redux"; //HOC
+import { setGameId } from '../actions';
+
 
 //components
 import PostGame from './PostGame';
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const Mathboard = () => {
+const Mathboard = props => {
     let newLevelA = '1';
     let newLevelB = '1';
     const history = useHistory();
@@ -61,7 +64,8 @@ const Mathboard = () => {
       .post('/api/games', {name: `${type} ${levelA}x${levelB}`})
       .then(res => {
           setGameId(res.data.id)
-          console.log(res)
+          props.setGameId(res.data.id)
+          console.log(res.data.id)
       })
       .catch(err => {
           console.log(err)
@@ -176,4 +180,14 @@ const Mathboard = () => {
     )
 }
 
-export default Mathboard;
+
+const mapStateToProps = state => {
+  return {
+      title: state.title
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { setGameId }
+)(Mathboard);
