@@ -58,9 +58,21 @@ const Stats = () => {
         })
     },[])
 
-    const sortBy = () => {
-        console.log('clicked')
-        setStats(stats.sort((a, b) => (a.score > b.score) ? 1 : -1))
+    const sortBy = (value) => {
+        // console.log('clicked')
+        // setStats([])
+        const sortedStats = stats.sort((a, b) => (a.score > b.score) ? 1 : -1)
+        setStats([...sortedStats])
+//         setStats([
+//             ...stats,
+//             {id: 22,
+// user_id: 16,
+// username: "stompke",
+// name: "Addition 2x3",
+// posted_on: "2020-03-13T00:21:54.000Z",
+// score: 1,
+// share: false}
+//         ])
         console.log(stats)
     }
     
