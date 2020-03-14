@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 import { Link, useHistory } from 'react-router-dom';
 import '../App.css';
 
@@ -11,6 +11,7 @@ import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -45,8 +46,8 @@ const Register = () => {
 
     const registerUser = e => {
       e.preventDefault();
-      axios
-      .post('http://localhost:5000/api/users/', credentials)
+      axiosWithAuth()
+      .post('/api/users/', credentials)
       .then(res => {
         console.log(res)
         localStorage.setItem('token', res.data.token)

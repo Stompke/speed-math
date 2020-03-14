@@ -5,6 +5,18 @@ const { jwtSecret } = require('../config/secrets');
 const Users = require('./model');
 const authenticate = require('../api/authenticate-middleware');
 
+
+
+router.get('/all', (req, res) => {
+    Users.all()
+    .then(users => {
+        res.status(200).json(users)
+    })
+    .catch(err => {
+        res.status(500).json({ error: "Could not get users", err})
+    })
+})
+
 router.get('/', authenticate, (req, res) => {
     let id = req.decodedToken.subject
     Users.findBy({id})

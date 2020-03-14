@@ -80,7 +80,7 @@ const Stats = () => {
 
     useEffect(() => {
         axiosWithAuth()
-        .get('http://localhost:5000/api/games/leaderboard/filter')
+        .get('/api/games/leaderboard/filter')
         .then(res => {
             console.log(res.data)
             setStats(res.data)
