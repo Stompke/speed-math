@@ -94,9 +94,9 @@ const Login = () => {
           <Paper className={classes.paper} elevation={3}>
             <h1>Login</h1>
             <form onSubmit={loginUser} className={classes.root} noValidate autoComplete="off">
-                  <TextField onChange={onChangeHandler} name="email" id="email" label="email" variant="outlined" />
+                  <TextField onChange={onChangeHandler} type='email' name="email" id="email" label="email" variant="outlined" />
                   {/* <TextField onChange={onChangeHandler} name="username" id="username" label="username" variant="outlined" /> */}
-                  <TextField onChange={onChangeHandler} name="password" type='password' id="password" label="password" variant="outlined" />
+                  <TextField onChange={onChangeHandler} autoComplete="current-password" name="password" type='password' id="password" label="password" variant="outlined" />
                 {loading ?
                     loadingAnimation
                     :
