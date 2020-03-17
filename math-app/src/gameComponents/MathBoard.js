@@ -52,7 +52,7 @@ const Mathboard = props => {
     const classes = useStyles();
     const { type, levelA, sign, levelB } = useParams();
     const [gameId, setGameId] = useState({});
-    const [ answer, setAnswer ] = useState({})
+    const [ answer, setAnswer ] = useState('')
     const [ num, setNum ] = useState({
       one: Math.floor(Math.random()*newLevelA),
       two: Math.floor(Math.random()*newLevelB),
@@ -65,7 +65,6 @@ const Mathboard = props => {
       .then(res => {
           setGameId(res.data.id)
           props.setGameId(res.data.id)
-          console.log(res.data.id)
       })
       .catch(err => {
           console.log(err)
@@ -95,7 +94,7 @@ const Mathboard = props => {
     useEffect(() => {
         const handleEsc = (event) => {
            if (event.keyCode === 32) {
-            setAnswer({})
+            setAnswer('')
           }
         };
         window.addEventListener('keydown', handleEsc);
@@ -120,7 +119,7 @@ const Mathboard = props => {
              one: Math.floor(Math.random()*newLevelA),
              two: Math.floor(Math.random()*newLevelB),
          })
-         setAnswer({})
+         setAnswer('')
      }
      
     } else if (type === 'Subtraction') {
@@ -130,7 +129,7 @@ const Mathboard = props => {
               one: Math.floor(Math.random()*newLevelA),
               two: Math.floor(Math.random()*newLevelB),
           })
-          setAnswer({})
+          setAnswer('')
       }
       
     } else if (type === 'Multiplication') {
@@ -140,7 +139,7 @@ const Mathboard = props => {
                one: Math.floor(Math.random()*newLevelA),
                two: Math.floor(Math.random()*newLevelB),
            })
-           setAnswer({})
+           setAnswer('')
        }
        
       } else if (type === 'Division') {
@@ -149,8 +148,8 @@ const Mathboard = props => {
             setNum({
                 one: Math.floor(Math.random()*newLevelA),
                 two: Math.floor(Math.random()*newLevelB),
-            })
-            setAnswer({})
+            }) 
+            setAnswer('')
         }
 
     }
