@@ -93,9 +93,6 @@ const PostGame = props => {
 
             </DialogContent>
             <DialogActions>
-                <Button autoFocus onClick={props.closePostGame} color="primary">
-                Practice
-                </Button>
                 <Button autoFocus onClick={clickDone} color="primary">
                 done
                 </Button>
