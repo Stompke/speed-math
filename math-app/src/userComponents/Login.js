@@ -3,6 +3,8 @@ import { axiosWithAuth } from '../utils/axiosWithAuth';
 import '../App.css';
 import Paper from '@material-ui/core/Paper';
 
+import { loadingAnimation } from './loadingAnimation';
+
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
@@ -33,9 +35,11 @@ const useStyles = makeStyles(theme => ({
 const Login = () => {
     const history = useHistory();
     const classes = useStyles();
+    const [loading, setLoading ] = useState(false);
     const [ credentials, setCredentials ] = useState({});
     const [open, setOpen] = useState(false);
     const [ snackbarText, setSnackbarText ] = useState({})
+
 
     
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -53,17 +57,20 @@ const Login = () => {
     }
     
     const loginUser = e => {
+      setLoading(true)
       e.preventDefault()
       axiosWithAuth()
       .post('api/users/login', credentials)
       .then(res => {
         console.log(res)
         localStorage.setItem('token', res.data.token)
+        setLoading(false)
         history.push('/')
       })
       .catch( err => {
         console.log(err.response.data.message)
         setSnackbarText(err.response.data.message)
+        setLoading(false)
         handleSnackbar()
         
       })
@@ -81,15 +88,20 @@ const Login = () => {
       )
     }
 
+
     return (
         <div className='App-header'>
           <Paper className={classes.paper} elevation={3}>
             <h1>Login</h1>
             <form onSubmit={loginUser} className={classes.root} noValidate autoComplete="off">
-                <TextField onChange={onChangeHandler} name="email" id="email" label="email" variant="outlined" />
-                {/* <TextField onChange={onChangeHandler} name="username" id="username" label="username" variant="outlined" /> */}
-                <TextField onChange={onChangeHandler} name="password" type='password' id="password" label="password" variant="outlined" />
-                <Button variant="contained" type='submit' color="primary">Log In</Button>
+                  <TextField onChange={onChangeHandler} name="email" id="email" label="email" variant="outlined" />
+                  {/* <TextField onChange={onChangeHandler} name="username" id="username" label="username" variant="outlined" /> */}
+                  <TextField onChange={onChangeHandler} name="password" type='password' id="password" label="password" variant="outlined" />
+                {loading ?
+                    loadingAnimation
+                    :
+                  <Button variant="contained" type='submit' color="primary">Log In</Button>
+                } 
             </form>
             <h6>
               <Link to="/register" >register</Link>

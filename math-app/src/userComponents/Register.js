@@ -5,6 +5,10 @@ import '../App.css';
 
 import Paper from '@material-ui/core/Paper';
 
+import { loadingAnimation } from './loadingAnimation';
+
+
+
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 
@@ -35,6 +39,8 @@ const Register = () => {
     const [ credentials, setCredentials ] = useState({});
     const [open, setOpen] = useState(false);
     const [ snackbarText, setSnackbarText ] = useState({})
+    const [loading, setLoading ] = useState(false);
+
     const history = useHistory();
 
     const onChangeHandler = e => {
@@ -46,17 +52,20 @@ const Register = () => {
 
     const registerUser = e => {
       e.preventDefault();
+      setLoading(true)
       axiosWithAuth()
       .post('/api/users/', credentials)
       .then(res => {
         console.log(res)
         localStorage.setItem('token', res.data.token)
+        setLoading(false)
         history.push('/')
       })
       .catch( err => {
         // console.log(err.message)
         // console.log(err.response.data.message)
         setSnackbarText(err.response.data.message)
+        setLoading(false)
         handleSnackbar()
       })
     }
@@ -80,6 +89,8 @@ const Register = () => {
       )
     }
 
+
+
     return (
         <div className='App-header'>
           <Paper className={classes.paper} elevation={3}>
@@ -88,7 +99,11 @@ const Register = () => {
                 <TextField onChange={onChangeHandler} name="email" id="email" label="email" variant="outlined" />
                 <TextField onChange={onChangeHandler} name="username" id="username" label="username" variant="outlined" />
                 <TextField onChange={onChangeHandler} name="password" type='password' id="password" label="password" variant="outlined" />
-                <Button variant="contained" type='submit' color="primary">Register</Button>
+                {loading ?
+               loadingAnimation
+               :  
+               <Button variant="contained" type='submit' color="primary">Register</Button>
+              }
             </form>
             <h6>
               <Link to='/login'>login</Link>

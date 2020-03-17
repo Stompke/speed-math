@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
+import { loadingAnimation } from './loadingAnimation';
+
+
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
@@ -58,6 +61,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Stats = () => {
     const [ stats, setStats ] = useState([]);
     const [ originalStats, setOriginalStats ] = useState([]);
+    const [ loading, setLoading ] = useState(false);
     const classes = useStyles();
 
     const [state, setState] = React.useState({
@@ -79,15 +83,17 @@ const Stats = () => {
 
 
     useEffect(() => {
+      setLoading(true)
         axiosWithAuth()
         .get('/api/games/leaderboard/filter')
         .then(res => {
-            console.log(res.data)
-            setStats(res.data)
-            setOriginalStats(res.data)
+          setLoading(false)
+          setStats(res.data)
+          setOriginalStats(res.data)
         })
         .catch(err => {
-            console.log(err)
+          setLoading(false)
+          console.log(err)
         })
     },[])
 
@@ -151,6 +157,12 @@ const Stats = () => {
 
 
 
+            {loading ? 
+            <div className="columns">
+              {loadingAnimation} 
+            </div>
+            :
+            <>
         {stats.map(item => 
             <div className={classes.columns} key={item.id}>
                 <h3>{item.name}</h3>
@@ -158,8 +170,9 @@ const Stats = () => {
                 <div>{item.posted_on}</div>
                 <div>{item.share ? <h3>Yes</h3> :  <h3>No</h3>}</div>
             </div>
-        
         )}
+            </>
+      }
         </Paper>
 
         </>
