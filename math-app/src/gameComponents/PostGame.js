@@ -66,7 +66,7 @@ const DialogActions = withStyles((theme: Theme) => ({
 
 const PostGame = props => {
     // const [open, setOpen] = React.useState(false);
-    // const history = useHistory();
+    const history = useHistory();
 
     // const handleClickOpen = () => {
     // setOpen(true);
@@ -74,6 +74,11 @@ const PostGame = props => {
     // const handleClose = () => {
     // setOpen(false);
     // };
+
+    const clickDone = () => {
+      props.closePostGame();
+      history.push('/');
+    }
 
     return (
         <>
@@ -89,7 +94,10 @@ const PostGame = props => {
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={props.closePostGame} color="primary">
-                yay!
+                Practice
+                </Button>
+                <Button autoFocus onClick={clickDone} color="primary">
+                done
                 </Button>
                 {/* <Button variant='contained' color='primary'  onClick={restartTimer}>Restart</Button> */}
 
