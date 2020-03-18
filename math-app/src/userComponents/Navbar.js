@@ -20,6 +20,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import HomeIcon from '@material-ui/icons/Home';
+import BarChartIcon from '@material-ui/icons/BarChart';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 //drawer
 import Drawer from '@material-ui/core/Drawer';
 // import Button from '@material-ui/core/Button';
@@ -84,13 +87,13 @@ const useStyles = makeStyles(theme => ({
           <List>
             <NavLink to='/'>
                 <ListItem button>
-                <ListItemIcon><InboxIcon /></ListItemIcon>
+                <ListItemIcon><HomeIcon /></ListItemIcon>
                 <ListItemText>Home</ListItemText>
                 </ListItem>
             </NavLink>
             <Link to='/stats'>
                 <ListItem button>
-                <ListItemIcon><InboxIcon /></ListItemIcon>
+                <ListItemIcon><BarChartIcon /></ListItemIcon>
                 <ListItemText>Stats</ListItemText>
                 </ListItem>
             </Link>
@@ -105,13 +108,17 @@ const useStyles = makeStyles(theme => ({
           <List>
             <Link to='/account'>
                   <ListItem button>
-                  <ListItemIcon><InboxIcon /></ListItemIcon>
+                  <ListItemIcon><AccountBoxIcon /></ListItemIcon>
                   <ListItemText>Account</ListItemText>
                   </ListItem>
               </Link>
           </List>
         </div>
       );
+
+      const homeClick = () => {
+        history.push('/');
+      }
 
 
     return (
@@ -124,7 +131,7 @@ const useStyles = makeStyles(theme => ({
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              MathGame
+              <Button onClick={homeClick} variant='contained' color='primary'>Minute Math</Button>
             </Typography>
             <Button onClick={logout} variant='contained' color="secondary">Logout</Button>
           </Toolbar>
