@@ -5,6 +5,10 @@ const { jwtSecret } = require('../config/secrets');
 const Games = require('./model');
 const authenticate = require('../api/authenticate-middleware');
 
+router.get('/is-logged-in', (req, res) => {
+    res.status(200).json({ message: 'logged in'})
+})
+
 router.get('/', (req, res) => {
     // let id = req.decodedToken.subject
     Games.games()

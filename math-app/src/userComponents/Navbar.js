@@ -65,7 +65,6 @@ const useStyles = makeStyles(theme => ({
         const history = useHistory()
         const logout = () => {
             localStorage.removeItem('token');
-            localStorage.removeItem('user');
             history.push('/login');
         }
             
