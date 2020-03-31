@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme: Theme) =>
         justifyContent: 'space-evenly',
         alignContent: 'center',
         '& div': {
-          color: 'red',
           width: '33%',
           '& div': {
             width: '100%',
