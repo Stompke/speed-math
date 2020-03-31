@@ -39,17 +39,28 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
         padding: 50,
         background: '#ffffff99',
+        [theme.breakpoints.down('sm')]: {
+          padding: '40px 5px',
+        }
     },
     columns: {
         display: 'flex',
         width: '100%',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
         alignContent: 'center',
+        '& div': {
+          color: 'red',
+          width: '33%',
+          '& div': {
+            width: '100%',
+          }
+        }
         
     },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
+        width: '100%',
       },
       selectEmpty: {
         marginTop: theme.spacing(2),
@@ -131,28 +142,30 @@ const Stats = () => {
         <h1>Stats</h1>
         <Paper className={classes.scoreBoard}>
             <div className={classes.columns}>
-            <FormControl  color="primary" variant="outlined" className={classes.formControl}>
-                <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
-                GameType
-                </InputLabel>
-                <Select
-                native
-                value={gameType}
-                onChange={handleChange('game_type')}
-                labelWidth={labelWidth}
-                inputProps={{
-                    game_type: 'age',
-                    id: 'outlined-age-native-simple',
-                }}
-                >
-                <option value="" />
-                {[... new Set(originalStats.map(data => data.name))].map(item => <option key={item} value={item}>{item}</option>)}
-                </Select>
-            </FormControl>                
-                {/* <div><Button onClick={filter} variant='contained' color="primary">GameType</Button></div> */}
-                <div><Button onClick={() => sortByScore()} variant='contained' color="primary">Score</Button></div>
-                <div><Button onClick={() => sortByDate()} variant='contained' color="primary">Date</Button></div>
-                <div><Button onClick={() => sortByPostedLeaderboard()} variant='contained' color="primary">Posted Leadboard</Button></div>
+              <div>
+                <FormControl  color="primary" variant="outlined" className={classes.formControl}>
+                    <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
+                    GameType
+                    </InputLabel>
+                    <Select
+                    native
+                    value={gameType}
+                    onChange={handleChange('game_type')}
+                    labelWidth={labelWidth}
+                    inputProps={{
+                        game_type: 'age',
+                        id: 'outlined-age-native-simple',
+                    }}
+                    >
+                    <option value="" />
+                    {[... new Set(originalStats.map(data => data.name))].map(item => <option key={item} value={item}>{item}</option>)}
+                    </Select>
+                </FormControl>                
+              </div>
+              {/* <div><Button onClick={filter} variant='contained' color="primary">GameType</Button></div> */}
+              <div><Button onClick={() => sortByScore()} variant='contained' color="primary">Score</Button></div>
+              <div><Button onClick={() => sortByDate()} variant='contained' color="primary">Date</Button></div>
+              {/* <div><Button onClick={() => sortByPostedLeaderboard()} variant='contained' color="primary">Posted Leadboard</Button></div> */}
             </div>
 
 
@@ -165,10 +178,10 @@ const Stats = () => {
             <>
         {stats.map(item => 
             <div className={classes.columns} key={item.id}>
-                <h3>{item.name}</h3>
+                <div><h3>{item.name}</h3></div>
                 <div>{item.score}</div>
                 <div>{item.posted_on}</div>
-                <div>{item.share ? <h3>Yes</h3> :  <h3>No</h3>}</div>
+                {/* <div>{item.share ? <h3>Yes</h3> :  <h3>No</h3>}</div> */}
             </div>
         )}
             </>
