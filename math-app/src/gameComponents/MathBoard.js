@@ -53,6 +53,7 @@ const Mathboard = props => {
     const { type, levelA, sign, levelB } = useParams();
     const [gameId, setGameId] = useState({});
     const [ answer, setAnswer ] = useState('')
+    const [ prevProblem, setPrevProblem ] = useState('');
     const [ num, setNum ] = useState({
       one: Math.floor(Math.random()*newLevelA),
       two: Math.floor(Math.random()*newLevelB),
@@ -112,46 +113,50 @@ const Mathboard = props => {
         )
     }
 
+    const correctAnswer = (numOne, numTwo) => {
+      // generates new random number
+      let one = Math.floor(Math.random()*newLevelA);
+      let two = Math.floor(Math.random()*newLevelB);
+      
+      // Gets new numbers if They are a 1, 0, or the same as the last problem
+      if (one == 1 || one == 0 || two == 1 || two == 0 || one == numOne || two == numTwo) {
+        correctAnswer(numOne, numTwo)
+      } else {
+        // sets state to remember last problem
+        setPrevProblem([numOne, numTwo])
+        // sets the new problem numbers
+        setNum({
+          one: one,
+          two: two,
+        })
+        // clears the answer input
+        setAnswer('')
+      }
+    }
+
     if(type === 'Addition') {
       if(num.one + num.two === answer) {
-         setScore(score + 1)
-         setNum({
-             one: Math.floor(Math.random()*newLevelA),
-             two: Math.floor(Math.random()*newLevelB),
-         })
-         setAnswer('')
+        setScore(score + 1)
+        correctAnswer(num.one, num.two);
      }
      
     } else if (type === 'Subtraction') {
        if(num.one - num.two === answer) {
-          setScore(score + 1)
-          setNum({
-              one: Math.floor(Math.random()*newLevelA),
-              two: Math.floor(Math.random()*newLevelB),
-          })
-          setAnswer('')
+        setScore(score + 1)
+        correctAnswer(num.one, num.two);
       }
       
     } else if (type === 'Multiplication') {
         if(num.one * num.two === answer) {
-           setScore(score + 1)
-           setNum({
-               one: Math.floor(Math.random()*newLevelA),
-               two: Math.floor(Math.random()*newLevelB),
-           })
-           setAnswer('')
-       }
+          setScore(score + 1)
+          correctAnswer(num.one, num.two);
+        }
        
       } else if (type === 'Division') {
          if(num.one / num.two === answer) {
-            setScore(score + 1)
-            setNum({
-                one: Math.floor(Math.random()*newLevelA),
-                two: Math.floor(Math.random()*newLevelB),
-            }) 
-            setAnswer('')
+          setScore(score + 1)
+          correctAnswer(num.one, num.two);
         }
-
     }
 
 
