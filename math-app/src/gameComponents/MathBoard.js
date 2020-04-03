@@ -53,6 +53,7 @@ const Mathboard = props => {
     const { type, levelA, sign, levelB } = useParams();
     const [gameId, setGameId] = useState({});
     const [ answer, setAnswer ] = useState('')
+    const [ prevProblem, setPrevProblem ] = useState([]);
     const [ num, setNum ] = useState({
       one: Math.floor(Math.random()*newLevelA),
       two: Math.floor(Math.random()*newLevelB),
@@ -112,46 +113,47 @@ const Mathboard = props => {
         )
     }
 
+    const correctAnswer = () => {
+    
+      console.log('runs correct answer');
+      let one = Math.floor(Math.random()*newLevelA);
+      let two = Math.floor(Math.random()*newLevelB);
+
+      if (one == 1 || one == 0 || two == 1 || two == 0) {
+        console.log('re-runs correctAnswer()')
+        correctAnswer()
+      } else {
+        setNum({
+            one: one,
+            two: two,
+        })
+        setAnswer('')
+      }
+    }
+
     if(type === 'Addition') {
       if(num.one + num.two === answer) {
-         setScore(score + 1)
-         setNum({
-             one: Math.floor(Math.random()*newLevelA),
-             two: Math.floor(Math.random()*newLevelB),
-         })
-         setAnswer('')
+        setScore(score + 1)
+        correctAnswer();
      }
      
     } else if (type === 'Subtraction') {
        if(num.one - num.two === answer) {
-          setScore(score + 1)
-          setNum({
-              one: Math.floor(Math.random()*newLevelA),
-              two: Math.floor(Math.random()*newLevelB),
-          })
-          setAnswer('')
+        setScore(score + 1)
+        correctAnswer();
       }
       
     } else if (type === 'Multiplication') {
         if(num.one * num.two === answer) {
-           setScore(score + 1)
-           setNum({
-               one: Math.floor(Math.random()*newLevelA),
-               two: Math.floor(Math.random()*newLevelB),
-           })
-           setAnswer('')
+          setScore(score + 1)
+          correctAnswer();
        }
        
       } else if (type === 'Division') {
          if(num.one / num.two === answer) {
-            setScore(score + 1)
-            setNum({
-                one: Math.floor(Math.random()*newLevelA),
-                two: Math.floor(Math.random()*newLevelB),
-            }) 
-            setAnswer('')
+          setScore(score + 1)
+          correctAnswer();
         }
-
     }
 
 
